@@ -33,12 +33,13 @@ freesound_client.set_token(token = oauth_key, auth_type="oauth")
 
 def main():
 	
+	home_dir = FLAGS.home_dir
 	target_name = FLAGS.target_name
 	# Query by text
 	if FLAGS.audio_crawling_freesound == 1:
 		target_query = FLAGS.target_query
-		if not os.path.exists("/audio_gen_data/"+target_name):
-			os.makedirs("/audio_gen_data/"+target_name)
+		if not os.path.exists(home_dir+"/"+target_name):
+			os.makedirs(home_dir+"/"+target_name)
 		print("Searching for " + target_query + ":")
 		print("----------------------------")
 		results_pager = freesound_client.text_search(
@@ -57,8 +58,8 @@ def main():
 				name, ext = os.path.splitext(sound.name)
 				if ext == '' or ext == ' ':
 					ext = '.wav'
-				sound.retrieve(directory="./data/"+target_name, name=target_name+"_"+str(file_num)+ext)
-				#sound.retrieve_preview("./data/"+target_name)
+				sound.retrieve(directory=home_dir+"/"+target_name, name=target_name+"_"+str(file_num)+ext)
+				#sound.retrieve_preview(home_dir+"/"+target_name)
 				file_num = file_num + 1
 			try:
 				results_pager = results_pager.next_page()
@@ -69,14 +70,19 @@ def main():
 
 	#Reformat to Target sampling rate, channel, sampl bit
 	if FLAGS.reformat_FFMPEG == 1:
-		all_to_wave(dirname="./data/"+target_name, sr=FLAGS.reformat_sr, ch=FLAGS.reformat_ch)
+		all_to_wave(dirname=home_dir+"/"+target_name, sr=FLAGS.reformat_sr, ch=FLAGS.reformat_ch)
 
 	#Annotate active region by VAD
 	if FLAGS.annot_VAD == 1:
-		annot_VAD(dirname="./data/"+target_name+"/wav")
+		annot_VAD(dirname=home_dir+"/"+target_name+"/wav")
 	
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
+	parser.add_argument(
+		'--home_dir',
+		type=str,
+		default='/audio_gen_data',
+		help='root directory for DB generation')
 	parser.add_argument(
 		'--target_query',
 		type=str,
