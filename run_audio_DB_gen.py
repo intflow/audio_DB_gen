@@ -56,7 +56,7 @@ def main():
 			for sound in results_pager:
 				print("\t-", sound.name, "by", sound.username)
 				name, ext = os.path.splitext(sound.name)
-				if ext == '' or ext == ' ':
+				if ext == '' or ext == ' ' or ext[-1]=="\"":
 					ext = '.wav'
 				sound.retrieve(directory=home_dir+"/"+target_name, name=target_name+"_"+str(file_num)+ext)
 				#sound.retrieve_preview(home_dir+"/"+target_name)
