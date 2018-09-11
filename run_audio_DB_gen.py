@@ -27,8 +27,8 @@ if api_key is None:
 
 #Choose token or oauth (oauth is required for retrieve source files
 freesound_client = freesound.FreesoundClient()
-#freesound_client.set_token(token = api_key, auth_type="token")
-freesound_client.set_token(token = oauth_key, auth_type="oauth")
+freesound_client.set_token(token = api_key, auth_type="token")
+#freesound_client.set_token(token = oauth_key, auth_type="oauth")
 
 
 def main():
@@ -58,8 +58,8 @@ def main():
 				name, ext = os.path.splitext(sound.name)
 				if ext == '' or ext == ' ' or ext[-1]=="\"":
 					ext = '.wav'
-				sound.retrieve(directory=home_dir+"/"+target_name, name=target_name+"_"+str(file_num)+ext)
-				#sound.retrieve_preview(home_dir+"/"+target_name)
+				#sound.retrieve(directory=home_dir+"/"+target_name, name=target_name+"_"+str(file_num)+ext)
+				sound.retrieve_preview(directory=home_dir+"/"+target_name, name=target_name+"_"+str(file_num)+ext)
 				file_num = file_num + 1
 			try:
 				results_pager = results_pager.next_page()
