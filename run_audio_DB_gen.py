@@ -81,7 +81,7 @@ def main():
 				P_d = np.sum(np.abs(d))
 				alpha = P_x / ( (10 ** (SNR/20)) * P_d)
 
-				#Get Noisy Mixture
+				#Get Noisy Mixture'
 				y = x + alpha * d
 				y = np.array(y, dtype='int16')
 				file_path_out = OUT_PATH + '/' + filename
