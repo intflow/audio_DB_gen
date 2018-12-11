@@ -81,7 +81,7 @@ if __name__ == '__main__':
 	parser.add_argument(
 		'--home_dir',
 		type=str,
-		default='/audio_gen_data',
+		default='/audio_crawl_data',
 		help='root directory for DB generation')
 	parser.add_argument(
 		'--target_query',
