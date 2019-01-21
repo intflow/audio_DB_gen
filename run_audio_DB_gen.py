@@ -15,21 +15,26 @@ def main():
 
 	#----Parameter Definition----
 	HOME_DIR = 'D:/BSsoft/DB_Management'
-	TARGET_NAME = 'timit_train'
+	TARGET_NAME = 'WSJ0'
 	INTERF1_NAME = 'woman_scream'
-	BGN_NAME = 'DEMAND_PCAFETER'
-	MIX_ALIAS = 'TEST1'
-	SNR = 0
+	BGN_NAME = 'CHIME3_BGN_ALL(BUS_CAF_PED_STR)_6CH'
+	MIX_ALIAS = 'CHIME3_Noisy'
+	SNR = 10
 
-	TARGET_PATH = HOME_DIR + '/TIMIT/timit/train/all'
+	TARGET_PATH = HOME_DIR + '/CHiME3/data/audio/16kHz/isolated/tr05_org'
 	INTERF1_PATH = 'D:/audio_crawl_data/scream_woman/wav'
-	BGN_PATH = HOME_DIR + '/DEMAND/PCAFETER'
-	OUT_PATH = HOME_DIR + '/' + MIX_ALIAS + '/' + str(SNR)
+	BGN_PATH = HOME_DIR + '/CHiME3/data/audio/16kHz/background/CHiME3_background_all/CH6'
 
 	num_file_DB = 'whole'
 	DB_read_seed = 3
-
+	SAVE_SEP_REF = 1 #Save true sources of mixture
+	GEN_BY_SNR = 0 #organize mixtures by SNR-specific folder 
 	random.seed( DB_read_seed ) #Initialize random seed
+
+	if GEN_BY_SNR == 1:
+		OUT_PATH = HOME_DIR + '/' + MIX_ALIAS + '/' + str(SNR)
+	else:
+		OUT_PATH = HOME_DIR + '/' + MIX_ALIAS
 
 	#----open each target file----
 	if not os.path.exists(OUT_PATH):
@@ -46,7 +51,7 @@ def main():
 				bgn_list.append(path_bgn + "/" + filename)
 				
 
-	#----scann every target files
+	#----scan every target files
 	for (path, dir, files) in os.walk(TARGET_PATH):
 
 		#Set number of files to be loaded
@@ -84,9 +89,25 @@ def main():
 				#Get Noisy Mixture'
 				y = x + alpha * d
 				y = np.array(y, dtype='int16')
+
+				if GEN_BY_SNR == 0:
+					filename = str(SNR) + '_' + filename
+
 				file_path_out = OUT_PATH + '/' + filename
 				sf.write(file_path_out, y, fs_x, 'PCM_16')
+				
+				if SAVE_SEP_REF:
+					if not os.path.exists(OUT_PATH + '/target'):
+						os.makedirs(OUT_PATH + '/target')
+					if not os.path.exists(OUT_PATH + '/noise'):
+						os.makedirs(OUT_PATH + '/noise')
 
+					x = np.array(x, dtype='int16')
+					d = np.array(alpha * d, dtype='int16')
+					file_path_out = OUT_PATH + '/target/' + filename
+					sf.write(file_path_out, x, fs_x, 'PCM_16')
+					file_path_out = OUT_PATH + '/noise/' + filename
+					sf.write(file_path_out, d, fs_x, 'PCM_16')
 
 if __name__ == '__main__':
 
