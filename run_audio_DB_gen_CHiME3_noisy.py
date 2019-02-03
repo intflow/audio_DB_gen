@@ -10,25 +10,35 @@ import soundfile as sf
 import random
 import numpy as np
 import librosa  #need for resampled load
-import json
 #import resampy
 
 
-def main(param):
+def main():
 
 	#----Parameter Definition----
-	TARGET_PATH = param['TARGET_PATH']
-	OUT_PATH = param['OUT_PATH']
-	BGN_PATH_LIST = param['BGN_PATH_LIST']
-	BGN_LABEL = param['BGN_LABEL']
-	SNR_LIST = param['SNR_LIST']
-	TARGET_SAMPLING = param['TARGET_SAMPLING']
-	num_file_DB = param['num_file_DB']
-	DB_read_seed = param['DB_read_seed']
-	SAVE_SEP_REF = param['SAVE_SEP_REF'] #Save true sources of mixture
+	HOME_DIR = 'D:/BSsoft/DB_Management'
+	TARGET_NAME = 'TIMIT_test'
+	#INTERF1_NAME = 'woman_scream'
+	BGN_NAME = 'CHiME3_bgn'
+	MIX_ALIAS = 'CHiME3_tr_Noisy'
+	SNR_LIST = [0, 5, 10, 15]
+	TARGET_SAMPLING = 16000
 
+	TARGET_PATH = HOME_DIR + '/CHiME3/data/audio/16kHz/isolated/tr05_org'
+	#INTERF1_PATH = 'D:/audio_crawl_data/scream_woman/wav'
+	BGN_PATH_LIST = [HOME_DIR + '/CHiME3/data/audio/16kHz/background/CHiME3_background_all/CH6']
+	BGN_LABEL = ['']
 
+	num_file_DB = 'whole'
+	DB_read_seed = 3
+	SAVE_SEP_REF = 1 #Save true sources of mixture
+	#GEN_BY_SNR = 1 #organize mixtures by SNR-specific folder 
 	random.seed( DB_read_seed ) #Initialize random seed
+
+	#if GEN_BY_SNR == 1:
+	#	OUT_PATH = HOME_DIR + '/' + MIX_ALIAS + '/' + str(SNR)
+	#else:
+	OUT_PATH = HOME_DIR + '/' + MIX_ALIAS
 
 	if not os.path.exists(OUT_PATH):
 		os.makedirs(OUT_PATH)
@@ -114,6 +124,4 @@ def main(param):
 
 if __name__ == '__main__':
 
-	json_param = open('configs/TIMIT_test_DSP2019.json').read()
-	param = json.loads(json_param)
-	main(param)
+	main()
