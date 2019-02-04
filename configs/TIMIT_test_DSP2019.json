@@ -1,6 +1,6 @@
 {
     "TARGET_PATH":"D:/BSsoft/DB_Management/TIMIT/timit/test/all",
-    "OUT_PATH":"D:/BSsoft/DB_Management/TIMIT_test_Sample",
+    "OUT_PATH":"D:/BSsoft/DB_Management/TIMIT_DEMAND_test_DSP2019",
     "BGN_PATH_LIST":[
                        "D:/BSsoft/DB_Management/DEMAND/DLIVING",
                        "D:/BSsoft/DB_Management/DEMAND/NRIVER",
@@ -15,7 +15,7 @@
                ],	
     "SNR_LIST":[0, 5, 10, 15],	
     "TARGET_SAMPLING":16000,	
-    "num_file_DB":2,
+    "num_file_DB":200,
     "DB_read_seed":3,
     "SAVE_SEP_REF":1
 }
