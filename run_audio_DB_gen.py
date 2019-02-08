@@ -26,6 +26,7 @@ def main(param):
 	num_file_DB = param['num_file_DB']
 	DB_read_seed = param['DB_read_seed']
 	SAVE_SEP_REF = param['SAVE_SEP_REF'] #Save true sources of mixture
+	OUT_SCALE = param['OUT_SCALE'] #Save true sources of mixture
 
 
 	random.seed( DB_read_seed ) #Initialize random seed
@@ -55,7 +56,7 @@ def main(param):
 					num_file_DB = len(files)
 					step = 1 #Load every data
 				else:
-					step = int(len(files) / num_file_DB)
+					step = int(len(files) / (num_file_DB-1))
 					if step < 1:
 						step = 1      
 
@@ -85,6 +86,10 @@ def main(param):
 						P_x = np.sum(np.abs(x))
 						P_d = np.sum(np.abs(d))
 						alpha = P_x / ( (10 ** (SNR/20)) * P_d)
+
+						#Scale Output signals
+						x *= OUT_SCALE
+						d *= OUT_SCALE
 
 						#Get Noisy Mixture'
 						y = x + alpha * d

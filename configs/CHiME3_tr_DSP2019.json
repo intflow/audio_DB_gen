@@ -11,5 +11,6 @@
     "TARGET_SAMPLING":16000,	
     "num_file_DB":"whole",
     "DB_read_seed":3,
-    "SAVE_SEP_REF":1
+    "SAVE_SEP_REF":1,
+    "OUT_SCALE":1
 }
