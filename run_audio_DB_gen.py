@@ -119,6 +119,6 @@ def main(param):
 
 if __name__ == '__main__':
 
-	json_param = open('configs/TIMIT_test_DSP2019.json').read()
+	json_param = open('configs/TIMIT_test_TAUnet.json').read()
 	param = json.loads(json_param)
 	main(param)

@@ -1,0 +1,16 @@
+{
+    "TARGET_PATH":"D:/DB/TIMIT/timit/test/all",
+    "OUT_PATH":"D:/Research/DB_Audio/TIMIT_NOISEX92_test_TAUnet",
+    "BGN_PATH_LIST":[
+                       "D:/DB/NoiseX-92"
+                   ],	
+    "BGN_LABEL":[
+                   ""
+               ],	
+    "SNR_LIST":[2.5, 7.5, 12.5, 17.5],	
+    "TARGET_SAMPLING":16000,	
+    "num_file_DB":200,
+    "DB_read_seed":3,
+    "SAVE_SEP_REF":1,
+    "OUT_SCALE":3
+}
